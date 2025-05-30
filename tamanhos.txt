@@ -1,0 +1,54 @@
+/* Sistema de Tamanhos - https://typescale.com/ 
+
+FONTES - Minor Third - 1.200 - Em REM
+0.44 - 0.54 - 0.64 - 0.77 - 0.92 - 1.11 - 1.33 - 1.6 - 1.92
+2.3 - 2.76 - 3.32 - 3.98 - 4.78 - 5.73 - 6.88 - 8.26
+
+
+ESPAÇAMENTOS - Major Third - 1.250 - Em REM
+0.21 - 0.27 - 0.33 - 0.42 - 0.52 - 0.65 - 0.82 - 1.02 - 1.28 - 1.6
+2.0 - 2.5 - 3.12 - 3.9 - 4.88 - 6.1 - 7.63 - 9.54 - 11.92
+
+LINK DA FONTE MONTSERRAT, COLAR NO HEAD
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+
+# Entrar no site para pegar o código do símbolo
+## symbl.cc */
+
+# Aninhamento
+## Aninhamento. agir no elemento dentro do css
+## Aninhamento .agir no elemento descendente do css
+
+
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 62.5%;
+      }
+
+      body {
+        font-family: "Montserrat";
+        font-size: 1.6rem;
+        line-height: 2.5rem;
+        color: #404040;
+        font-weight: 500;
+      }
+
+      h1 {
+        font-size: 3.32rem;
+        line-height: 4.88rem;
+      }
+
+      h2 {
+        font-size: 2.76rem;
+        line-height: 3.9rem;
+      }
+
+      h3 {
+        font-size: 2.3rem;
+        line-height: 3.12rem;
+      }

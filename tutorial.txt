@@ -1,0 +1,389 @@
+1 PASSO - CRIAÇÃO DO BANCO DE DADOS SQL
+Ir no arquivo criacaoDb
+Tabela usuário, compras e produtos e tabela associativa produtos e compras
+Cliente -> Cultivares (1 : N)
+Cultivar -> Clientes (1 : N)
+Cultivares -> Clientes (N : N)
+
+2 PASSO - CRIAR ARQUIVO app.js
+Criar o arquivo app.js
+
+3 PASSO - CRIAR ARQUIVO packagejson
+Digitar no terminal npm init -y, configurações padrões do node
+No packagejson colocar  "type": "module"
+
+4 PASSO - INSTALAR O EXPRESS
+Digitar no terminal npm install express
+Digitar no terminal npm install cors
+Colocar no arquivo app.js = import express from 'express'
+Colocar no arquivo app.js = import cors from "cors"
+No arquivo packagejson em script, colocar = "dev": "node --watch ."
+Olhar para o arquivo sempre que for atualizado
+
+5 PASSO - INSTALAR O pg admin
+Digitar no google node-postgres, para instalar o postgres no node, é o código abaixo:
+Digitar no terminal npm install pg
+
+6 PASSO - CONECTAR O nodejs COM O BANCO pg admin
+Criar o código abaixo para conectar o nodejs com banco de dados
+Digitar no app.js:
+
+import pg from "pg";
+
+const pool = new pg.Pool({
+  host: "localhost",
+  port: 5432,
+  user: "postgres",
+  password: "Limao_10",
+  database: "ViveiroLimeira",
+});
+
+console.log((await pool.query("SELECT * FROM clientes")).rows);
+
+Rodar o node ./app.js e conferir se deu certo
+
+7 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
+Criar as variáveis de ambiente
+São as variáveis que não serão compartilhadas com terceiros
+Criar arquivo .env
+Colocar no arquivo .env
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=Limao_10
+DB_DATABASE=ViveiroLimeira
+
+Alterar o arquivo app.js
+const pool = new pg.Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
+
+Digitar no terminal npm install dotenv!!!!!!!!!!!!
+npm install dotenv = serve para ter acesso as variáveis de ambiente 
+Colocar na app.js = import "dotenv/config";
+Versões mais novas não precisam do dotenv, não deu certo. Precisei instalar
+Rodar o node ./app.js e conferir se deu certo
+
+8 PASSO - CRIAR O ARQUIVO DE REPOSITÓRIO
+Criar uma pasta repositório = dbOnLine
+Vai guardar os códigos que fazem comunicação com banco de dados
+Essa pasta terá tudo que for comunicação com banco de dados
+
+9 PASSO - CRIAR O ARQUIVO DE ACESSO AO BANCO DE DADOS
+Criar o arquivo db.js na pasta dbOnLine
+
+Recortar do app.js e colar no db.js
+
+import pg from "pg";
+
+const pool = new pg.Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
+
+Exportar o pool
+export default pool
+No arquivo db.js colar = import pool from "./dbOnLine/db.js";
+  
+10 PASSO - CRIAR A API
+Conectar o Express ao Banco de dados
+No arquivo app.js colar o código abaixo:
+
+const porta = 4000;
+const app = express();
+
+app.listen(porta, () => {
+  console.log(`API está online, na porta ${porta}!!!`);
+});
+
+
+11 PASSO - CRIAR A ROTA GET QUE IRÁ COMUNICAR O DB COM SERVIDOR
+app.get("/", async (req, res) => {
+  const result = (await pool.query("SELECT * FROM clientes")).rows;
+  res.status(200).send(result);
+});
+
+Rodar o comando dev = npm run dev
+
+12 PASSO - RODAR O INSOMNIA
+Abrir o insomnia e digitar = http://localhost:4000/
+
+13 PASSO
+Dentro da pasta dbOnLine, criar um arquivo DbClass.js
+As iniciais em maiúsculo, porque iremos criar uma classe nesse arquivo
+Esse arquivo terá as ações comuns para o banco de dados
+Deletar do app.js o código = import pool from "./dbOnLine/db.js";
+
+Colocar no arquivo DbClass.js o código abaixo:
+import pool from "./db.js";
+
+class DbClass {
+  async getAll(table) {
+    const results = (await pool.query(`SELECT * FROM ${table}`)).rows;
+    return results;
+  }
+}
+
+export default DbClass;
+
+Alterar o código no app:
+// CRIAR A ROTA GET QUE IRÁ COMUNICAR O DB COM SERVIDOR
+app.get("/clientes", async (req, res) => {
+  const result = await new DbClass().getAll("clientes");
+  res.status(200).send(result);
+});
+
+14 PASSO - CRIAR O ARQUIVO DE ROTAS
+Criar a pasta rotas e arquivo rotasUsuarios.js
+Vamos criar a rota dos usuários
+
+import { Router } from "express";
+import DbClass from "../dbOnLine/DbClass.js";
+
+const rotas = Router();
+
+rotas.get("/", async (req, res) => {
+  const result = await new DbClass().getAll("clientes");
+  res.status(200).send(result);
+});
+
+export default rotas;
+
+O arquivo app.js, fica assim:
+Instalar npm install cors
+
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import rotasClientes from "./rotas/rotasClientes.js";
+
+// CRIAR A API - Conectar o Express ao Banco de dados
+const porta = 4000;
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// CONECTANDO O EXPRESS AO BANCO DE DADOS
+app.use("/clientes", rotasClientes);
+
+app.listen(porta, () => {
+  console.log(`API está online, na porta ${porta}!!!`);
+});
+
+15 PASSO - AUTOMATIZAR O DbClass.js, rotasClientes.js e CRIAR O DbClassClientes.js
+
+AUTOMATIZAR O DbClass.js
+import pool from "./db.js";
+
+class DbClass {
+  // PEGAR TUDO
+  async getAll(tabela, colunas) {
+    try {
+      const results = (
+        await pool.query(`SELECT ${colunas.join()} FROM ${tabela}`)
+      ).rows;
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+export default DbClass;
+
+CRIAR O DbClassClientes.js
+import DbClass from "./DbClass.js";
+
+class DbClassClientes extends DbClass {
+  async getAll() {
+    try {
+      const results = await super.getAll("clientes", [
+        "nome",
+        "sobrenome",
+        "telefone",
+        "email",
+        "cpf",
+      ]);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+export default DbClassClientes;
+
+AUTOMATIZAR O rotasClientes.js
+import { Router } from "express";
+// import DbClass from "../dbOnLine/DbClass.js";
+import DbClassClientes from "../dbOnLine/DbClassClientes.js";
+
+const rotas = Router();
+
+// ROTA PARA PEGAR TODOS OS CLIENTES
+rotas.get("/", async (req, res) => {
+  const result = await new DbClassClientes().getAll();
+  res.status(200).send(result);
+});
+
+export default rotas;
+
+16 PASSO - CRIAR O ARQUIVO index.html e style.class
+Linkar o style.css ao index.html
+
+ARQUIVO HTML INICIAL
+<body>
+    <header></header>
+    <main>
+      <section id="container-produto">
+        <div id="card-produto-1">
+          <span>Catuaí 62</span>
+          <p>Saquinho</p>
+          <p>Produção</p>
+          <p>Pedidos</p>
+          <p>Saldo</p>
+          <button>Adicionar</button>
+        </div>
+      </section>
+    </main>
+  </body>
+
+17 PASSO - CRIAR O ARQUIVO main.js
+Criar no main, o banco de dados (dicionário) para cultivares = produtos
+
+18 PASSO - COMO ESTÁ O ARQUIVO index.html e main.js
+
+index.html
+
+<body>
+    <header></header>
+    <main>
+      <section id="container-produto"></section>
+    </main>
+    <script src="main.js"></script>
+  </body>
+
+main.js
+
+const catalogo = [
+  {
+    id: "2025-1",
+    nome: "Catuaí 62",
+    embalgem: "Saquinho",
+    saquinho: true,
+    producao: 2000,
+    pedido: 0,
+    saldo: 0,
+  },
+  {
+    id: "2025-2",
+    nome: "Catuaí 62",
+    embalgem: "Tubete",
+    tubete: true,
+    producao: 1000,
+    pedido: 0,
+    saldo: 0,
+  },
+  {
+    id: "2025-3",
+    nome: "Catuaí 62",
+    embalgem: "Paper Pot",
+    paperPot: true,
+    producao: 1000,
+    pedido: 0,
+    saldo: 0,
+  },
+];
+
+for (const produtoCatalogo of catalogo) {
+  const cartaoProduto = `
+  <div id="card-produto-1">
+    <span>${produtoCatalogo.nome}</span>
+    <p>${produtoCatalogo.embalgem}</p>
+    <p>${produtoCatalogo.producao}</p>
+    <p>${produtoCatalogo.pedido}</p>
+    <p>${produtoCatalogo.saldo}</p>
+    <button>Adicionar</button>
+  </div>`;
+  document.getElementById("container-produto").innerHTML += cartaoProduto;
+}
+
+19 PASSO - INSTALAR O TAILWIND
+Rodar no terminal: npm install tailwindcss @tailwindcss/postcss postcss
+Criar o arquivo postcss.config.js, dentro desse arquivo colar o código abaixo:
+
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+Criar o arquivo tailwind.config.js, dentro desse arquivo colar o código abaixo:
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./src/**/*.{html,js}", "./*.{html,js}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+Colar no style.css:
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+Rodar no terminal npm run dev
+
+NÃO USEI O TAIL WIND
+
+20 PASSO - INSTALAR LINK DE ÍCONES
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+Digitar no google para procurar os ícones: fontawesome
+
+21 PASSO - CRIAR PASTA SRC PARA ARQUIVOS JS SECUNDÁRIOS
+Dentro dessa pasta criar o arquivo menuCarrinho.js
+
+22 PASSO - FAZER O DEPLOY
+Entrar no RENDER https://dashboard.render.com/login
+
+criei um projeto ViveiroLimeira com javasript, nodejs, postgreSQL e gostaria de fazer o deploy, pode me ajudar?
+Frontend: tem frontend HTML/CSS/JavaScript
+Banco de dados PostgreSQL: Está localmente
+Render
+
+
+
+
+
+
+
+
+
+20 PASSO - IMPORTAR npm install body-parser
+npm install body-parser
+
+14 PASSO - FAZER UMA REQUISIÇÃO DO BANCO DE DADOS
+Criar o arquivo script.js e colar o código:
+fetch("http://localhost:3000/users")
+  .then((response) => response.json()) // Converte para JSON
+  .then((data) => console.log(data)) // Exibe os dados no console
+  .catch((error) => console.error("Erro ao buscar os posts:", error));
