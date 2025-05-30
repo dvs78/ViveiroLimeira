@@ -363,15 +363,21 @@ Digitar no google para procurar os ícones: fontawesome
 Dentro dessa pasta criar o arquivo menuCarrinho.js
 
 22 PASSO - FAZER O DEPLOY
-Entrar no RENDER https://dashboard.render.com/login
-
+Entrar no RENDER 
 criei um projeto ViveiroLimeira com javasript, nodejs, postgreSQL e gostaria de fazer o deploy, pode me ajudar?
 Frontend: tem frontend HTML/CSS/JavaScript
 Banco de dados PostgreSQL: Está localmente
 Render
 
 
+Subir ViveiroLimeira do VS para GitHub, digite no terminal:
+git init
+git add .
+git commit -m "Deploy inicial"
+git remote add origin https://github.com/dvs78/ViveiroLimeira.git
+git push -u origin master
 
+Depois clique em: Sign in with your broswer
 
 
 
