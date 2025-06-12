@@ -4,5 +4,24 @@
   },
   "dependencies": {
     "toastify-js": "^1.12.0"
-  }
+  },
+  "name": "viveiro_limeira",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix back-end && npm install --prefix front-end && npm run build --prefix front-end",
+    "start": "npm run start --prefix back-end"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvs78/ViveiroLimeira.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvs78/ViveiroLimeira/issues"
+  },
+  "homepage": "https://github.com/dvs78/ViveiroLimeira#readme",
+  "description": ""
 }

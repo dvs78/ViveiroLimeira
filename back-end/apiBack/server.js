@@ -7,6 +7,9 @@
 import express from "express";
 import cors from "cors";
 import rotasClientes from "../crud/rotas/rotasClientes.js";
+import path, { dirname } from "path";
+
+const __dirname = path.resolve();
 
 const app = express();
 const PORT = 3000;
@@ -31,7 +34,13 @@ app.use(cors());
 // app.get("/clientes", async (request, response) => {
 //   response.send(clientes);
 // });
-app.use("/clientes", rotasClientes);
+app.use("/api/clientes", rotasClientes);
+
+app.use(express.static(path.join(__dirname, "../../front-end/dist")));
+
+app.get("*any", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../front-end/dist/index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor está escutando na porta ${PORT}`);
