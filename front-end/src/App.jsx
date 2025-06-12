@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../src/pages/Home";
 import Clientes from "../src/pages/Clientes";
-import Mudas from "../src/pages/mudas";
+import Mudas from "../src/pages/Mudas";
 
 function App() {
   return (
