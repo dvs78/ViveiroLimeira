@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "toastify-js": "^1.12.0"
+  }
+}

@@ -1,0 +1,13 @@
+import pg from "pg";
+
+const pool = new pg.Pool({
+  host: "localhost",
+  port: 5432,
+  user: "postgres",
+  password: "Limao_10",
+  database: "ViveiroLimeira",
+});
+
+export default pool;
+
+// console.log((await pool.query("SELECT * FROM clientes")).rows);
