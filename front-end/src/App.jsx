@@ -1,8 +1,8 @@
 import Header from "./components/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/home";
-import Clientes from "./pages/Clientes";
-import Mudas from "./pages/mudas";
+import Home from "../src/pages/Home";
+import Clientes from "../src/pages/Clientes";
+import Mudas from "../src/pages/mudas";
 
 function App() {
   return (

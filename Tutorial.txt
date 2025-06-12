@@ -331,25 +331,7 @@ Rodar git commit -m "" . , precisa estar na pasta mãe
 Rodar git push . , precisa estar na pasta mãe
 
 
-
-
-Na pasta fron-end criar um arquivo .env
-NODE_ENV=development
-
-Não entendi muito bem, mas se está em desenvolvimento vai fazer uma coisa, caso contrário usa outro endereço
-No front-end, digite no terminal:
-npm i dotenv
-
-Depois colocar em todos os arquivos da apiFront, na verdade que dependem disso const BASE_URL = "http://localhost:3000/api/carrinho";
-import "dotenv/config";
-
-const NODE_ENV = process.env.NODE_ENV;
-
-
-
-
-
-16 PASSO -RENDER
+15 PASSO -RENDER
 Clique em deploy web service
 Em Build Command: npm run build
 Em Start Command: npm run start
