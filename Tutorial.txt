@@ -253,7 +253,7 @@ app.get("*any", (req, res) => {
   res.sendFile(path.join(__dirname, "../../front-end/dist/index.html"));
 });
 
-
+****Alterar no 
 14 PASSO - CÓDIGO PARA MANDAR PAR INDEX.HTML
 Ir para pasta back-end, digite no terminal
 npm i path
