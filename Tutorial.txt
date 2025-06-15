@@ -337,7 +337,7 @@ Rodar git commit -m "" . , precisa estar na pasta mãe
 Rodar git push . , precisa estar na pasta mãe
 
 
-15 PASSO -RENDER
+15 PASSO - DEPLOY DO PROJETO NO RENDER
 Clique em deploy web service
 Em Build Command: npm run build
 Em Start Command: npm run start
@@ -348,15 +348,14 @@ Clicar em deploy web service
 
 
 
-
+16 PASSO - DEPLOY DO BANDO DE DADOS NO RENDER
 Cadastrar o banco de dados no Render
 Vá em dashboard
 Em new, clique e postgres
-
 Coloque o nome do banco de dados
 Clicar em Free
 Deixar os outros campos como estão
-Clicar em database
+Clicar em create database
 Vá em dashboard
 Clicar no banco e dados
 Clicar em connect
@@ -367,6 +366,39 @@ Clique no projeto
 Crie uma variável de ambiente
 Key: DATABASE_URL                        Valor: postgresql://viveirolimeira_user:HH73wLSYoxZAbyROuUhSF85Cy80ZdMQ8@dpg-d10r7qq4d50c73b3o320-a/viveirolimeira
 Clique em salvar
+
+
+17 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
+Criar as variáveis de ambiente
+São as variáveis que não serão compartilhadas com terceiros
+
+Criar arquivo .env
+Colocar no arquivo .env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=Limao_10
+DB_DATABASE=ViveiroLimeira
+
+Digitar no terminal npm install dotenv
+npm install dotenv
+Serve para ter acesso as variáveis de ambiente
+
+Colocar na server.js = import "dotenv/config"
+Versões mais novas não precisam do dotenv, não deu certo. Precisei instalar
+
+Alterar o arquivo server.js
+const pool = new pg.Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
+
+
+
+
 No arquivo connect do backend, cole o código abaixo:
 import pkg from 'pg';
 const { Pool } = pkg;
@@ -496,35 +528,6 @@ console.log((await pool.query("SELECT * FROM clientes")).rows);
 
 Rodar o node ./server.js e conferir se deu certo
 
-
-4 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
-Criar as variáveis de ambiente
-São as variáveis que não serão compartilhadas com terceiros
-
-Criar arquivo .env
-Colocar no arquivo .env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=Limao_10
-DB_DATABASE=ViveiroLimeira
-
-Digitar no terminal npm install dotenv
-npm install dotenv = serve para ter acesso as variáveis de ambiente
-
-Colocar na server.js = import "dotenv/config"
-Versões mais novas não precisam do dotenv, não deu certo. Precisei instalar
-
-Alterar o arquivo server.js
-const pool = new pg.Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-});
-
-Rodar o node ./server.js e conferir se deu certo
 
 
 5 PASSO - CRIAR AS ESTRUTURAS DO CRUD
