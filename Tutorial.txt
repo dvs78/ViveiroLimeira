@@ -364,7 +364,7 @@ postgresql://viveirolimeira_user:HH73wLSYoxZAbyROuUhSF85Cy80ZdMQ8@dpg-d10r7qq4d5
 Vá em dashboard
 Clique no projeto
 Crie uma variável de ambiente
-Key: DATABASE_URL                        Valor: postgresql://viveirolimeira_user:HH73wLSYoxZAbyROuUhSF85Cy80ZdMQ8@dpg-d10r7qq4d50c73b3o320-a/viveirolimeira
+Key: DATABASE_URL                        Valor: postgresql://viveirolimeira_x8xq_user:TJxkazEOmmVCI8hyvM6Tv6JqhmbxGr9Q@dpg-d17i23p5pdvs738dqvqg-a/viveirolimeira_x8xq
 Clique em salvar
 
 17 PASSO - ALTERAR O CAMINHO DE ACESSO 
