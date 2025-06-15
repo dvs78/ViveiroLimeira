@@ -4,7 +4,8 @@ import axios from "axios";
 
 import { capitalizePalavras } from "../src/utilitarios/funcoesDiversas.js";
 
-const BASE_URL = "http://localhost:3000/api";
+// const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "https://viveirolimeira.onrender.com/api";
 
 // BUSCAR CLIENTES
 export async function getAllClients() {
