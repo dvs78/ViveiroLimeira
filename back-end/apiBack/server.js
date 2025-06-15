@@ -7,9 +7,16 @@
 import express from "express";
 import cors from "cors";
 import rotasClientes from "../crud/rotas/rotasClientes.js";
-import path, { dirname } from "path";
+// import path, { dirname } from "path";
 
-const __dirname = path.resolve();
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log("__dirname", __dirname);
+
+// const __dirname = path.resolve();
 
 const app = express();
 const PORT = 3000;
