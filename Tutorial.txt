@@ -253,7 +253,13 @@ app.get("*any", (req, res) => {
   res.sendFile(path.join(__dirname, "../../front-end/dist/index.html"));
 });
 
-****Alterar no 
+****Alterar no packge.json do back-end, retirar o nodemon, não é aceito na produção
+
+ "scripts": {
+    "start": "node ./apiBack/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
 14 PASSO - CÓDIGO PARA MANDAR PAR INDEX.HTML
 Ir para pasta back-end, digite no terminal
 npm i path
