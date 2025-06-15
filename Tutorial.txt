@@ -367,6 +367,9 @@ Crie uma variável de ambiente
 Key: DATABASE_URL                        Valor: postgresql://viveirolimeira_user:HH73wLSYoxZAbyROuUhSF85Cy80ZdMQ8@dpg-d10r7qq4d50c73b3o320-a/viveirolimeira
 Clique em salvar
 
+17 PASSO - ALTERAR O CAMINHO DE ACESSO 
+Copiar o link de deploy do RENDER
+https://viveirolimeira.onrender.com
 
 17 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
 Criar as variáveis de ambiente

@@ -2,13 +2,25 @@ import pool from "../../apiBack/connect.js";
 
 class DbClass {
   // PEGAR TUDO
-  async getAll(tabela, colunas) {
+  // async getAll(tabela, colunas) {
+  //   try {
+  //     const results = (
+  //       await pool.query(`SELECT ${colunas.join()} FROM ${tabela}`)
+  //     ).rows;
+  //     return results;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
+  async getAll(tableName, columnsArray) {
     try {
-      const results = (
-        await pool.query(`SELECT ${colunas.join()} FROM ${tabela}`)
-      ).rows;
-      return results;
+      const query = `SELECT ${columnsArray.join(", ")} FROM ${tableName}`;
+      console.log("🧾 Executando query:", query);
+      const result = await pool.query(query);
+      return result.rows;
     } catch (error) {
+      console.error("❌ Erro em getAll() de DbClass:", error);
       throw error;
     }
   }
