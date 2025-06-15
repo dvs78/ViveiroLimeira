@@ -371,6 +371,21 @@ Clique em salvar
 Copiar o link de deploy do RENDER
 https://viveirolimeira.onrender.com
 
+
+ Como preencher no DBeaver
+Aqui está exatamente o que colocar:
+De acordo com a senha do banco de dados no render em connect:
+postgresql://viveirolimeira_bt82_user:Z4nPpsZYBmDhkhhzL5wDXLPur7ScQsNh@dpg-d17k64ruibrs73fpthhg-a/viveirolimeira_bt82
+
+Campo	Valor
+Host	dpg-d17i23p5pdvs738dqvqg-a
+Port	5432 (padrão)
+Database	viveirolimeira_x8xq
+Username	viveirolimeira_x8xq_user
+Password	TJxkazEOmmVCI8hyvM6Tv6JqhmbxGr9Q (copie do Render com atenção)
+SSL mode	require
+
+
 17 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
 Criar as variáveis de ambiente
 São as variáveis que não serão compartilhadas com terceiros

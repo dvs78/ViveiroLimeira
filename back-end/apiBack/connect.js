@@ -14,6 +14,8 @@ import pg from "pg";
 
 const isProduction = process.env.NODE_ENV === "production";
 
+// psql "postgres:Limao_10@localhost:5432/ViveiroLimeira" --set=sslmode=require
+
 const pool = new pg.Pool({
   connectionString:
     process.env.DATABASE_URL ||
