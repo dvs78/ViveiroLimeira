@@ -9,17 +9,17 @@
 // });
 
 // export default pool;
-
+import dotenv from "dotenv";
 import pg from "pg";
+
+dotenv.config();
 
 const isProduction = process.env.NODE_ENV === "production";
 
 // psql "postgres:Limao_10@localhost:5432/ViveiroLimeira" --set=sslmode=require
 
 const pool = new pg.Pool({
-  connectionString:
-    process.env.DATABASE_URL ||
-    "postgres://postgres:Limao_10@localhost:5432/ViveiroLimeira",
+  connectionString: process.env.DATABASE_URL,
   ssl: isProduction ? { rejectUnauthorized: false } : false,
 });
 
@@ -29,3 +29,5 @@ pool
   .catch((err) => console.error("❌ Erro ao conectar ao PostgreSQL:", err));
 
 export default pool;
+
+//  "postgresql://viveirolimeira_94ij_user:nZIDkx3o5NVVVs3fWEDpiSAjsBJYpmBz@dpg-d17k8evdiees7387e82g-a/viveirolimeira_94ij",

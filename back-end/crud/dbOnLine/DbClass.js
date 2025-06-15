@@ -9,7 +9,7 @@ class DbClass {
       const result = await pool.query(query);
       return result.rows;
     } catch (error) {
-      console.error("❌ Erro em getAll() de DbClass:", error);
+      console.error("Erro em getAll() de DbClass:", error);
       throw error;
     }
   }

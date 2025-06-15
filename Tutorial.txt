@@ -375,15 +375,22 @@ https://viveirolimeira.onrender.com
  Como preencher no DBeaver
 Aqui está exatamente o que colocar:
 De acordo com a senha do banco de dados no render em connect:
-postgresql://viveirolimeira_bt82_user:Z4nPpsZYBmDhkhhzL5wDXLPur7ScQsNh@dpg-d17k64ruibrs73fpthhg-a/viveirolimeira_bt82
+postgresql://viveirolimeira_94ij_user:nZIDkx3o5NVVVs3fWEDpiSAjsBJYpmBz@dpg-d17k8evdiees7387e82g-a/viveirolimeira_94ij
 
-Campo	Valor
-Host	dpg-d17i23p5pdvs738dqvqg-a
-Port	5432 (padrão)
-Database	viveirolimeira_x8xq
-Username	viveirolimeira_x8xq_user
-Password	TJxkazEOmmVCI8hyvM6Tv6JqhmbxGr9Q (copie do Render com atenção)
-SSL mode	require
+Campo no DBeaver	Valor
+Ir em banco de dados => nova conexão e 2 cliques em postgres
+
+Principal:
+Host	dpg-d17k8evdiees7387e82g-a.oregon-postgres.render.com
+Porta	5432
+Base de dados	viveirolimeira_94ij
+Usuário	viveirolimeira_94ij_user
+Senha	nZIDkx3o5NVVVs3fWEDpiSAjsBJYpmBz
+
+Ir em propriedades do driver:
+Modo SSL (se aparecer)	require
+
+Clicar em testar  conexão
 
 
 17 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
