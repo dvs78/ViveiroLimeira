@@ -43,6 +43,10 @@ select {
   font-size: 14px;
 }
 
+.select {
+  display: flex;
+  flex-direction: column;
+}
 h1,
 h2 {
   font-family: "Montserrat", "Segoe UI";

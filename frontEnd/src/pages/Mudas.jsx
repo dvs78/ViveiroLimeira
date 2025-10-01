@@ -19,16 +19,16 @@ const Mudas = () => {
         <section className="cadastro__mudas">
           <h2>CADASTRAR PRODUÇÃO</h2>
           <form action="">
-            <div>
+            <div className="select">
               <label htmlFor="ano">Ano:</label>
               <select
                 id="ano"
                 value={ano}
                 onChange={(e) => setAno(e.target.value)}
               >
-                {dbAnos.map((a) => (
-                  <option key={a} value={a}>
-                    {a}
+                {dbAnos.map((ano) => (
+                  <option key={ano} value={ano}>
+                    {ano}
                   </option>
                 ))}
               </select>
