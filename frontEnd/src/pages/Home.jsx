@@ -13,6 +13,7 @@ const Home = () => {
   return (
     <>
       <Header
+        titulo="Viveiro de Mudas de Café"
         truck={faTruck}
         book={faBook}
         seedling={faSeedling}
@@ -20,27 +21,55 @@ const Home = () => {
         iconCart={faCartShopping}
       />
       <div className="home__container-card">
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
-        <CardMuda />
+        <CardMuda
+          cultivar="Catuaí 62"
+          embalagem="Saquinho"
+          producao="100000"
+          pedido="60000"
+          estoque="40000"
+        />
+        <CardMuda
+          cultivar="Catuaí 62"
+          embalagem="Saquinho"
+          producao="100000"
+          pedido="60000"
+          estoque="40000"
+        />
+        <CardMuda
+          cultivar="Catuaí 62"
+          embalagem="Saquinho"
+          producao="100000"
+          pedido="60000"
+          estoque="40000"
+        />
+        <CardMuda
+          cultivar="Catuaí 62"
+          embalagem="Saquinho"
+          producao="100000"
+          pedido="60000"
+          estoque="40000"
+        />
+        <CardMuda
+          cultivar="Catuaí 62"
+          embalagem="Saquinho"
+          producao="100000"
+          pedido="60000"
+          estoque="40000"
+        />
+        <CardMuda
+          cultivar="Catuaí 62"
+          embalagem="Saquinho"
+          producao="100000"
+          pedido="60000"
+          estoque="40000"
+        />
+        <CardMuda
+          cultivar="Catuaí 62"
+          embalagem="Saquinho"
+          producao="100000"
+          pedido="60000"
+          estoque="40000"
+        />
       </div>
     </>
   );

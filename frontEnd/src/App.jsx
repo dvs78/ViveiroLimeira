@@ -1,12 +1,15 @@
-import Header from "./components/Header";
-import CardMuda from "./components/CardMuda";
 import Home from "./pages/Home";
+import Mudas from "./pages/Mudas";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <Home />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<Home />} />
+        <Route path="/mudas" element={<Mudas />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -22,11 +22,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CardMuda = ({
-  cultivar = "Catuaí 62",
-  embalagem = "Saquinho",
-  producao = 100000,
-  pedido = 5000,
-  estoque = 95000,
+  cultivar,
+  embalagem,
+  producao,
+  pedido,
+  estoque,
   onAdd,
 }) => {
   const percEstoque = Math.max(

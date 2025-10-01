@@ -149,7 +149,7 @@ Esse comando faz o Git converter LF para CRLF no checkout e reverter para LF no 
 5 PASSO - CRIAR A PÁGINA LOGIN
 Em src criar a pasta pages, dentro dela criar a pasta security e home, e dentro de cada pasta criar Login.jsx e Home.jsx
 
-Digitar no terminal, pasta frontend:
+Digitar no terminal, pasta frontEnd:
 npm i react-router-dom
 
 import React, { useState } from "react";
@@ -225,6 +225,9 @@ npm i axios
 
 -----------------------------------------------------------------------------------------
 6. CRIANDO AS ROTAS DO PROJETO
+Digitar no terminal, pasta frontEnd:
+npm i react-router-dom
+
 Instalar o gerenciador de rotas
 
 Em App.jsx, importar BrowserRouter, Routes e Route para gerenciar as rotas:
@@ -234,24 +237,22 @@ Dentro da pasta src criar a pasta Pages e dentro delas ciar a pasta Login e Home
 Dentro da pasta components, criar o arquivo Header
 
 Deixar a página App.jsx, assim:
-import Home from "./pages/home/Home";
-import Login from "./pages/security/Login";
+import Home from "./pages/Home";
+import Mudas from "./pages/Mudas";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="app_components">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<Home />} />
+        <Route path="/mudas" element={<Mudas />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-export default App;
 
+export default App;
 
 -----------------------------------------------------------------------------------------
 7. CRIAÇÃO DO BACKEND

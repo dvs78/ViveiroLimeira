@@ -24,7 +24,27 @@ button {
   cursor: pointer;
 }
 
-h1 {
+label {
+  display: flex;
+  align-items: start;
+  font-family: "Montserrat", "Segoe UI";
+  font-size: 12px;
+}
+
+select {
+  display: flex;
+  align-items: center;
+  outline: none;
+  border-color: var(--azul-claro);
+  box-shadow: rgba(39, 52, 105, 0.7);
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-family: "Montserrat", "Segoe UI";
+  font-size: 14px;
+}
+
+h1,
+h2 {
   font-family: "Montserrat", "Segoe UI";
 }
 
@@ -36,6 +56,19 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+/* ----- MUDAS PAGES ----- */
+.main__mudas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: var(--cinza-claro);
+}
+
+.cadastro__mudas {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ----- COMPONENTS ----- */
@@ -70,6 +103,7 @@ h1 {
 
 .header__icon {
   cursor: pointer;
+  color: var(--branco);
 }
 
 .header__icon:hover {
