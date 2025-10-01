@@ -1,11 +1,5 @@
 // Header.jsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBook,
-  faSeedling,
-  faUser,
-  faCartShopping,
-} from "@fortawesome/free-solid-svg-icons";
 import logoVerde from "../assets/logo/tlSolucoesAmbientaisVerde.png";
 
 const Header = ({ truck, book, seedling, iconUser, iconCart }) => (
