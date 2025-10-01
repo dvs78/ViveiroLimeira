@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap");
+/* ----- FAZER O RESET ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ----- ROOT ----- */
+:root {
+  --azul-escuro: #273469;
+  --azul-medio: #374a95;
+  --azul-claro: #4c63bd;
+  --cinza-escuro: rgb(68, 68, 68);
+  --cinza-medio: -rgb(85, 85, 85);
+  --cinza-claro: rgb(170, 170, 170);
+  --branco: rgb(226 232 240);
+  --vermelho-claro: #ff4a47;
+}
+
+/* ----- GERAL ----- */
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+h1 {
+  font-family: "Montserrat", "Segoe UI";
+}
+
+/* ----- HEADER ----- */
+.header__index {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background-color: var(--azul-escuro);
+  padding: 15px;
+  & img {
+    height: 40px;
+  }
+  & h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    color: var(--branco);
+  }
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-right: 4px;
+    color: var(--branco);
+    font-size: 20px;
+  }
+}
+
+.header__icon {
+  cursor: pointer;
+}
+
+.header__icon:hover {
+  color: var(--azul-claro);
+}
