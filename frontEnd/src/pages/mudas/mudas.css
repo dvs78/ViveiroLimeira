@@ -1,0 +1,74 @@
+/* ----- MUDAS PAGES ----- */
+.main__mudas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cadastro__mudas {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ícone com borda circular */
+.icon__add {
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 50%;
+  line-height: 1; /* evita “descer” o ícone */
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+}
+
+.icon__add:hover {
+  background-color: rgba(39, 52, 105, 0.5);
+}
+
+/* Botão flutuante no canto inferior direito */
+.botao__abrir-modal {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  display: flex; /* centraliza o ícone dentro do botão */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.12s ease;
+}
+
+.main__mudas {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.modal__backdrop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.form__modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: var(--azul-escuro); */
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+}
+
+.form__modal-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 20px;
+  width: 300px;
+}

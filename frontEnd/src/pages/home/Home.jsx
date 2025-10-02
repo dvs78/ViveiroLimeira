@@ -1,5 +1,5 @@
-import CardMuda from "../components/CardMuda";
-import Header from "../components/Header";
+import CardMuda from "../../components/CardMuda";
+import Header from "../../components/Header";
 
 import {
   faTruck,

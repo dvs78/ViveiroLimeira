@@ -1,23 +1,3 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-// const CardMuda = () => {
-//   return (
-//     <div className="card__muda">
-//       <h2 className="cultivar">Catuaí 62</h2>
-
-//       <h3 className="embalagem">Saquinho</h3>
-//       <h4 className="producao">Produção: 100000</h4>
-//       <h4 className="pedido">Pedido: 5000</h4>
-//       <h4 className="estoque">Estoque: 95000</h4>
-//       <button>
-//         <FontAwesomeIcon icon={faCartPlus} />
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default CardMuda;
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 

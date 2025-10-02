@@ -1,5 +1,5 @@
-import Home from "./pages/Home";
-import Mudas from "./pages/Mudas";
+import Home from "./pages/home/Home";
+import Mudas from "./pages/mudas/Mudas";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

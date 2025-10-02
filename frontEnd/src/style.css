@@ -6,6 +6,20 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+/* body {
+  margin: 0;
+} */
+
+#root {
+  display: flex;
+  flex-direction: column; /* header em cima, main preenche o resto */
+}
+
 /* ----- ROOT ----- */
 :root {
   --azul-escuro: #273469;
@@ -22,6 +36,40 @@
 button {
   all: unset;
   cursor: pointer;
+  font-family: "Montserrat", "Segoe UI";
+}
+
+.btns__modal {
+  display: flex;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+.btn__salvar-modal {
+  text-align: center;
+  width: 100%;
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 5px;
+  &:hover {
+    background-color: rgba(39, 52, 105, 0.5);
+  }
+}
+.btn__cancelar-modal {
+  text-align: center;
+  width: 100%;
+  background-color: transparent;
+  color: black;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 5px;
+  &:hover {
+    background-color: rgba(170, 170, 170, 0.5);
+  }
 }
 
 label {
@@ -33,6 +81,7 @@ label {
 
 select {
   display: flex;
+  flex-direction: column;
   align-items: center;
   outline: none;
   border-color: var(--azul-claro);
@@ -41,11 +90,13 @@ select {
   padding: 5px 8px;
   font-family: "Montserrat", "Segoe UI";
   font-size: 14px;
+  gap: 30px;
 }
 
 .select {
   display: flex;
   flex-direction: column;
+  gap: 3px;
 }
 h1,
 h2 {
@@ -60,19 +111,6 @@ h2 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
-}
-
-/* ----- MUDAS PAGES ----- */
-.main__mudas {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  background-color: var(--cinza-claro);
-}
-
-.cadastro__mudas {
-  display: flex;
-  flex-direction: column;
 }
 
 /* ----- COMPONENTS ----- */
@@ -239,3 +277,5 @@ h2 {
   transform: translate(-50%, -50%) scale(1);
   pointer-events: auto;
 }
+
+/* ----- MODAL COMPONENTS ----- */
