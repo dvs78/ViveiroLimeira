@@ -23,48 +23,8 @@ const Home = () => {
       <div className="home__container-card">
         <CardMuda
           cultivar="Catuaí 62"
-          embalagem="Saquinho"
-          producao="100000"
-          pedido="60000"
-          estoque="40000"
-        />
-        <CardMuda
-          cultivar="Catuaí 62"
-          embalagem="Saquinho"
-          producao="100000"
-          pedido="60000"
-          estoque="40000"
-        />
-        <CardMuda
-          cultivar="Catuaí 62"
-          embalagem="Saquinho"
-          producao="100000"
-          pedido="60000"
-          estoque="40000"
-        />
-        <CardMuda
-          cultivar="Catuaí 62"
-          embalagem="Saquinho"
-          producao="100000"
-          pedido="60000"
-          estoque="40000"
-        />
-        <CardMuda
-          cultivar="Catuaí 62"
-          embalagem="Saquinho"
-          producao="100000"
-          pedido="60000"
-          estoque="40000"
-        />
-        <CardMuda
-          cultivar="Catuaí 62"
-          embalagem="Saquinho"
-          producao="100000"
-          pedido="60000"
-          estoque="40000"
-        />
-        <CardMuda
-          cultivar="Catuaí 62"
+          ano="2025"
+          semente="Semente do ano"
           embalagem="Saquinho"
           producao="100000"
           pedido="60000"

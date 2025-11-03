@@ -254,6 +254,7 @@ function App() {
 
 export default App;
 
+
 -----------------------------------------------------------------------------------------
 7. CRIAÇÃO DO BACKEND
 Vamos criar a API do projeto. Preparar o projeto para receber requisição e resposta 
@@ -293,8 +294,9 @@ O console.log no frontend roda pelo inspecionar, na tela
 
 Toda vez que mudar o arquivo, para não ter que matar o backend e atualizar, passar a instrução node --watch ./server.js
 
+
 --------------------------------------------------------------------------------------------
-13 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
+9 PASSO - CRIAR O ARQUIVO .env PARA DEIXAR OS DADOS DE CONEXÃO SEGUROS
 São as variáveis que não serão compartilhadas com terceiros
 Criar arquivo .env no backend
 
@@ -309,8 +311,9 @@ Digitar no terminal, na pasta backend:
 npm install dotenv
 npm install dotenv = serve para ter acesso as variáveis de ambiente
 
+
 --------------------------------------------------------------------------------------------
-14 INSTALAR O PG ADMIN
+10 INSTALAR O PG ADMIN
 Digitar no terminal, na pasta backend:
 npm i pg, já instalei
 
@@ -336,11 +339,9 @@ export default pool;
 
 Rodar o node --watch .\index.js e conferir se deu certo
 
-parei aqui
-
 
 -----------------------------------------------------------------------------------------
-9. CRIANDO REQUISIÇÃO GET =  ENDPOINT "/"
+11. CRIANDO REQUISIÇÃO GET =  ENDPOINT "/"
 
 No backend chama endpoint, http://localhost:3000
 O frontend chama rota, http://localhost:5173
@@ -376,7 +377,7 @@ Toda vez que mudar o arquivo, para não ter que matar o backend e atualizar, pas
 
 
 -----------------------------------------------------------------------------------------
-10. CRIANDO REQUISIÇÃO POST =  ENDPOINT "/"
+12. CRIANDO REQUISIÇÃO POST =  ENDPOINT "/"
 
 Toda requisição na web, é do tipo get, por isso é necessário baixar um programa para testar outro tipos de requisções, ex:
 app.post("/", (req, res) => {
@@ -434,13 +435,14 @@ app.post("/", (req, res) => {
 
 Toda vez que mudar o arquivo, para não ter que matar o backend e atualizar, passar a instrução node --watch ./index.js
 
+
 -----------------------------------------------------------------------------------------
-11. CRIANDO REQUISIÇÃO POST com ID =  ENDPOINT "/produto/:id"
+13. CRIANDO REQUISIÇÃO POST com ID =  ENDPOINT "/produto/:id"
 PAREI AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //req.params
 
 // Parâmetros da requisição
-app.post("/produto/:id", (req, res) => {
+app.post("/mudas/:id", (req, res) => {
   const { body } = req;
   const { nome, imersao } = body;
 
@@ -454,8 +456,7 @@ app.post("/produto/:id", (req, res) => {
 
 
 -----------------------------------------------------------------------------------------
-15 CRIAR AS ESTRUTURAS DO CRUD
-
+14. CRIAR AS ESTRUTURAS DO CRUD NÃO PRECISEI DESSE PASSO
 
 Criar o arquivo de acesso ao banco de dados
 Criar o arquivo db.js na pasta dbOnLine
@@ -479,31 +480,24 @@ export default pool
 
 
 -----------------------------------------------------------------------------------------
-16 CRIAR A CLASSE GERAL DAS ROTAS
+14 CRIAR A CLASSE GERAL DAS ROTAS
 Criar a pasta crud em backend
 POST, GET, PUT, DELETE
 CRUD - CREATE, READ, UPDATE e DELETE
-Dentro da pasta crud, criar a pasta dbOnLine, colocar as estruturas de acesso ao banco de dados
-Essa pasta vai guardar os códigos que fazem comunicação com banco de dados e terá tudo que for comunicação com banco de dados
-Dentro da pasta dbOnLine, criar um arquivo DbClass.js
+Dentro da pasta routes, criar um arquivo DbClass.routes.js
 As iniciais em maiúsculo, porque iremos criar uma classe nesse arquivo
 Esse arquivo terá as ações comuns para o banco de dados
 
 Copiar o modelo de outros projetos
 
-NOVO MODELO
-No arquivo index.js
-
-Rota GET para login
-
 
 -----------------------------------------------------------------------------------------
-17. REQUISIÇÃO PELO FRONTEND COM AXIOS e Middleware CORS
+15. REQUISIÇÃO PELO FRONTEND COM AXIOS e Middleware CORS
 Instalar o axios 
 Digite no terminal do frontend:
 npm i axios
 
-Importar o axios em TaskList.jsx
+Importar o axios em Mudas.jsx
 import axios from "axios"
 
 Instalar o CORS para comunicar frontend com backend

@@ -5,7 +5,7 @@ export const dbCultivares = [
   "Catucaí 2SL",
   "Catucaí 24-137",
   "IBC 12",
-  "Mundo Novo",
+  "Mundo Novo 379-19",
   "Paraíso 2",
   "Topázio",
   "Obatã",
@@ -15,7 +15,7 @@ export const dbAnos = ["2025", "2026", "2027"];
 export const dbSemente = ["Câmara fria", "Semente do ano"];
 export const dbRecipiente = [
   "Paper pot",
-  "Saquinho",
+  "Saquinho 10x20 cm",
   "Tubete 180 mL",
   "Tubete 290 mL",
 ];

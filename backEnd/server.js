@@ -1,9 +1,15 @@
 import express from "express";
+import cors from "cors";
+import rotasMudas from "./routes/rotasMudas.routes.js";
 
-// Colocar todas as funções do express na variável app
 const app = express();
+app.use(cors());
+app.use(express.json());
 
-// Colocar o app para rodar, ou seja, receber pedidos ou enviar respostas
+app.get("/health", (_req, res) => res.json({ ok: true }));
+
+app.use("/mudas", rotasMudas);
+
 app.listen(3000, () => {
-  console.log("Meu servidor está rodando na porta http://localhost:3000");
+  console.log("API rodando em http://localhost:3000");
 });

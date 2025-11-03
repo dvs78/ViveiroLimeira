@@ -1,7 +1,6 @@
 import pg from "pg";
 import "dotenv/config";
 
-// Acessar o BANCO DADOS
 const pool = new pg.Pool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -10,4 +9,10 @@ const pool = new pg.Pool({
   database: process.env.DB_DATABASE,
 });
 
-console.log((await pool.query("SELECT * FROM login")).rows);
+// opcional: teste rápido (rode este arquivo diretamente para testar)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const r = await pool.query("SELECT NOW()");
+  console.log(r.rows[0]);
+}
+
+export default pool;

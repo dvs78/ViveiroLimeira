@@ -1,3 +1,42 @@
+-- extensão p/ gerar UUID
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- Tabela LOGIN
+CREATE TABLE IF NOT EXISTS public.login (
+  id    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  nome  TEXT NOT NULL UNIQUE,
+  senha TEXT NOT NULL
+);
+
+-- Inserir usuários
+INSERT INTO public.login (senha, nome) VALUES
+  ('0000', 'Daniel'),
+  ('0001', 'Tais');
+
+
+-- Tabela MUDAS
+CREATE TABLE mudas (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ano INTEGER NOT NULL,
+    semente VARCHAR(100),
+    embalagem VARCHAR(100),
+    cultivar VARCHAR(100),
+    producao NUMERIC(10,2)
+);
+
+-- Inserir mudas
+INSERT INTO mudas (ano, semente, embalagem, cultivar, producao)
+VALUES
+(2025, 'Câmara fria', 'Saquinho 10x20 cm', 'Catuaí 144', 25000),
+(2025, 'Semente do ano', 'Saquinho 10x20 cm', 'Catuaí 144', 35000),
+(2025, 'Câmara fria', 'Saquinho 10x20 cm', 'Catuaí 62', 30000),
+(2025, 'Semente do ano', 'Saquinho 10x20 cm', 'Catuaí 62', 3000),
+(2025, 'Semente do ano', 'Tubete 180 mL', 'Catuaí 62', 5000),
+(2025, 'Semente do ano', 'Saquinho 10x20 cm', 'Catucaí 2SL', 19000),
+(2025, 'Semente do ano', 'Saquinho 10x20 cm', 'Catucaí 24-137', 22000),
+(2025, 'Câmara fria', 'Saquinho 10x20 cm', 'Mundo Novo 379-19', 20000),
+(2025, 'Câmara fria', 'Tubete 180 mL', 'Mundo Novo 379-19', 18000);
+
 
 
 
@@ -18,15 +57,7 @@ CREATE TABLE IF NOT EXISTS public.clientes(
   estado TEXT NOT NULL
 );
 
--- CRIAÇÃO DA TABELA MUDAS
-CREATE TABLE IF NOT EXISTS public.mudas(
-  id SERIAL PRIMARY KEY,
-  ano VARCHAR(100) NOT NULL,
-  semente VARCHAR(255) NOT NULL,
-  embalagem VARCHAR(100) NOT NULL,
-  cultivar VARCHAR(100) NOT NULL,
-  producao VARCHAR(100) NOT NULL
-);
+
 
 -- CRIAÇÃO DA TABELA CARRINHO
 CREATE TABLE IF NOT EXISTS public.carrinho(

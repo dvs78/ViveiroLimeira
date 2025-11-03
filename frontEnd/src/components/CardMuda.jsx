@@ -3,6 +3,8 @@ import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CardMuda = ({
   cultivar,
+  ano,
+  semente,
   embalagem,
   producao,
   pedido,
@@ -18,8 +20,10 @@ const CardMuda = ({
     <article className="card__muda">
       <header className="card__muda-header">
         <div className="card__muda-title">{cultivar}</div>
-        <span className="card__muda-badge">{embalagem}</span>
+        <span className="card__muda-badge">{ano}</span>
       </header>
+      <span className="card__muda-badge">{semente}</span>
+      <span className="card__muda-badge">{embalagem}</span>
 
       <ul className="card__muda-stats">
         <li>
