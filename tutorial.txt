@@ -278,10 +278,10 @@ Só para lembrar que no package.json vai criar assim "main": "index.js", será o
 Vamos importar o express em server.js
 import express from "express";
 
-Colocar todas as funções do express na variável app
+// Colocar todas as funções do express na variável app
 const app = express();
 
-Colocar o app para rodar, ou seja, receber pedidos ou enviar respostas
+// Colocar o app para rodar, ou seja, receber pedidos ou enviar respostas
 app.listen(3000, () => {
   console.log("Meu servidor está rodando na porta http://localhost:3000");
 });
@@ -314,8 +314,9 @@ npm install dotenv = serve para ter acesso as variáveis de ambiente
 Digitar no terminal, na pasta backend:
 npm i pg, já instalei
 
-Criar o arquivo connect.js na pasta backend
-Colocar em connect.js
+Criar a pasta routes
+Criar o arquivo connect.js na pasta routes
+Colocar em connect.routes.js
 
 import pg from "pg";
 import "dotenv/config";
