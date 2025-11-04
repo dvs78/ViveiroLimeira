@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 const CardMuda = ({
   cultivar,
@@ -20,7 +20,9 @@ const CardMuda = ({
     <article className="card__muda">
       <header className="card__muda-header">
         <div className="card__muda-title">{cultivar}</div>
-        <span className="card__muda-badge">{ano}</span>
+        <span className="card__muda-badge">
+          <FontAwesomeIcon icon={faCalendarDays} /> {ano}
+        </span>
       </header>
       <span className="card__muda-badge">{semente}</span>
       <span className="card__muda-badge">{embalagem}</span>
@@ -28,15 +30,15 @@ const CardMuda = ({
       <ul className="card__muda-stats">
         <li>
           <span>Produção</span>
-          <strong>{producao.toLocaleString("pt-BR")}</strong>
+          <strong>{Number(producao).toLocaleString("pt-BR")}</strong>
         </li>
         <li>
           <span>Pedido</span>
-          <strong>{pedido.toLocaleString("pt-BR")}</strong>
+          <strong>{Number(pedido).toLocaleString("pt-BR")}</strong>
         </li>
         <li>
           <span>Estoque</span>
-          <strong>{estoque.toLocaleString("pt-BR")}</strong>
+          <strong>{Number(estoque).toLocaleString("pt-BR")}</strong>
         </li>
       </ul>
 

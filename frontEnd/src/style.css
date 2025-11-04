@@ -98,6 +98,50 @@ select {
   flex-direction: column;
   gap: 3px;
 }
+
+/* --- INPUT PADRÃO IGUAL AOS SELECTS --- */
+.input__linha-unica {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+}
+
+.input__linha-unica span {
+  font-family: "Montserrat", "Segoe UI";
+  font-size: 12px;
+  /* color: var(--cinza-escuro); */
+}
+
+/* aplica o mesmo estilo do select */
+.input__linha-unica input[type="text"],
+.input__linha-unica input[type="number"],
+.input__linha-unica input[type="tel"],
+.input__linha-unica input[type="search"] {
+  width: 100%;
+  border: 1px solid rgba(76, 99, 189, 0.6); /* tom igual ao select */
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-family: "Montserrat", "Segoe UI";
+  font-size: 14px;
+  /* color: var(--cinza-escuro); */
+  background-color: #fff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+/* mesmo foco do select */
+.input__linha-unica input:focus {
+  border-color: var(--azul-claro);
+  box-shadow: 0 0 0 2px rgba(76, 99, 189, 0.2);
+}
+
+/* hover suave */
+.input__linha-unica input:hover {
+  border-color: rgba(76, 99, 189, 0.8);
+}
+
 h1,
 h2 {
   font-family: "Montserrat", "Segoe UI";
@@ -196,6 +240,7 @@ h2 {
   font-size: 18px;
 }
 .card__muda-badge {
+  text-align: center;
   font-size: 11px;
   font-weight: 600;
   color: var(--azul-escuro);

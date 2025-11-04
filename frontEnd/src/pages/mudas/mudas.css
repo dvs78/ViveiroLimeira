@@ -12,8 +12,8 @@
 
 /* Ícone com borda circular */
 .icon__add {
-  font-size: 20px;
-  padding: 8px;
+  font-size: 30px;
+  padding: 12px;
   border-radius: 50%;
   line-height: 1; /* evita “descer” o ícone */
   background-color: var(--azul-escuro);
@@ -71,4 +71,103 @@
   margin-top: 10px;
   gap: 20px;
   width: 300px;
+}
+
+/* ----- TABELA ----- */
+.tabela__mudas {
+  margin: 40px auto;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 520px; /* para o sticky funcionar com scroll */
+  overflow: auto; /* scroll no corpo, cabeçalho fica fixo */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fff;
+}
+
+/* IMPORTANTE: não use overflow: hidden no TABLE quando usar sticky */
+.tabela__mudas table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
+
+.tabela__mudas th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--azul-escuro);
+  color: #fff;
+  padding: 16px 10px; /* cabeçalho mais alto */
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
+/* garante que o texto do corpo apareça (se “sumiu” por herança) */
+.tabela__mudas td {
+  color: #1a1a1a;
+  padding: 14px 10px; /* linhas mais altas */
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.tabela__mudas tr:hover {
+  background-color: #f5f7ff;
+}
+
+/* ===== COLUNA AÇÕES ===== */
+.tabela__mudas th.acao,
+.tabela__mudas td.acao {
+  width: 110px; /* largura estável */
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* wrapper para centralizar os ícones */
+.acoes {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* centraliza verticalmente */
+  gap: 8px;
+  height: 100%;
+}
+
+/* Botões de ação */
+.btn-edit,
+.btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  font-size: 1rem;
+  line-height: 0; /* elimina deslocamento por baseline do SVG */
+  display: inline-flex; /* alinha o SVG no centro */
+  align-items: center;
+  justify-content: center;
+}
+
+.acoes svg,
+.acoes i {
+  display: block; /* evita “descer” por baseline */
+}
+
+.btn-edit {
+  color: var(--azul-escuro);
+}
+.btn-delete {
+  color: #e53935;
+}
+
+.btn-edit:hover {
+  background-color: rgba(30, 136, 229, 0.1);
+  transform: scale(1.08);
+}
+.btn-delete:hover {
+  background-color: rgba(229, 57, 53, 0.1);
+  transform: scale(1.08);
 }
