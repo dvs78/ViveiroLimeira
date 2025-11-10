@@ -26,7 +26,7 @@ body,
   --azul-medio: #374a95;
   --azul-claro: #4c63bd;
   --cinza-escuro: rgb(68, 68, 68);
-  --cinza-medio: -rgb(85, 85, 85);
+  --cinza-medio: rgb(85, 85, 85);
   --cinza-claro: rgb(170, 170, 170);
   --branco: rgb(226 232 240);
   --vermelho-claro: #ff4a47;
@@ -48,6 +48,7 @@ button {
 .btn__salvar-modal {
   text-align: center;
   width: 100%;
+  height: 30px;
   background-color: var(--azul-escuro);
   color: var(--branco);
   border-radius: 4px;
@@ -145,6 +146,7 @@ select {
 h1,
 h2 {
   font-family: "Montserrat", "Segoe UI";
+  text-align: center;
 }
 
 /* ----- PAGES ----- */
@@ -165,7 +167,7 @@ h2 {
   position: sticky;
   top: 0;
   background-color: var(--azul-escuro);
-  padding: 15px;
+  padding: 18px;
 }
 
 .header__index img {
@@ -323,4 +325,293 @@ h2 {
   pointer-events: auto;
 }
 
-/* ----- MODAL COMPONENTS ----- */
+/* ----- PAGE MUDAS ----- */
+.main__mudas {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* centraliza na horizontal */
+  align-items: flex-start; /* <- não estica na vertical */
+  gap: 20px;
+}
+
+.cadastro__mudas {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão flutuante no canto inferior direito */
+.botao__abrir-modal {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  display: flex; /* centraliza o ícone dentro do botão */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.12s ease;
+}
+
+/* Ícone com borda circular */
+.icon__add {
+  font-size: 30px;
+  padding: 12px;
+  border-radius: 50%;
+  line-height: 1; /* evita “descer” o ícone */
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+}
+
+.icon__add:hover {
+  background-color: var(--azul-claro);
+}
+
+.main__mudas {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Overlay em tela cheia + centralização */
+.modal__backdrop {
+  position: fixed; /* cobre a tela toda */
+  inset: 0; /* top/right/bottom/left: 0 */
+  display: flex;
+  align-items: center; /* centro vertical */
+  justify-content: center; /* centro horizontal */
+  padding: 16px; /* respira nas bordas em telas pequenas */
+  z-index: 2000;
+}
+/* contêiner do modal */
+#modal-mudas {
+  width: 100%;
+  max-width: 420px; /* largura do card */
+}
+
+/* “cartão” do modal */
+.form__modal {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  gap: 12px;
+
+  /* animação de entrada opcional */
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+  animation: modalIn 0.18s ease-out forwards;
+}
+
+@keyframes modalIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* form interno */
+.form__modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+/* ----- TABELA ----- */
+/* contêiner base da tabela (sem altura fixa) */
+/* a seção da tabela não é esticada pelo pai */
+.tabela__mudas {
+  align-self: flex-start; /* <- garante altura natural */
+  margin: 40px auto;
+  width: 90%;
+  max-width: 1000px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fff;
+}
+
+/* quando tiver muitas linhas: usa rolagem interna */
+.tabela__mudas--scroll {
+  max-height: 520px;
+  overflow: auto;
+}
+
+/* quando tiver poucas linhas: altura natural */
+.tabela__mudas--auto {
+  max-height: none;
+  overflow: visible;
+}
+
+/* IMPORTANTE: não use overflow: hidden no TABLE quando usar sticky */
+.tabela__mudas table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0; /* remove “fendas” */
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
+
+.tabela__mudas th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--azul-escuro);
+  color: #fff;
+  padding: 16px 10px; /* cabeçalho mais alto */
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
+/* garante que o texto do corpo apareça (se “sumiu” por herança) */
+.tabela__mudas td {
+  color: #1a1a1a;
+  padding: 14px 10px; /* linhas mais altas */
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+/* Cantos arredondados no contêiner */
+.tabela__mudas {
+  border-radius: 12px; /* já existia? pode aumentar aqui */
+}
+
+/* Para os cantos aparecerem corretamente */
+.tabela__mudas table {
+  border-collapse: separate; /* em vez de collapse */
+  border-spacing: 0; /* remove “fendas” */
+}
+
+/* Topo arredondado (cabeçalho) */
+.tabela__mudas thead th:first-child {
+  border-top-left-radius: 12px;
+}
+.tabela__mudas thead th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.tabela__mudas tr:hover {
+  background-color: #f5f7ff;
+}
+/* Base arredondada (última linha visível) */
+.tabela__mudas tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+.tabela__mudas tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* ===== COLUNA AÇÕES ===== */
+.tabela__mudas th.acao,
+.tabela__mudas td.acao {
+  width: 110px; /* largura estável */
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* wrapper para centralizar os ícones */
+.acoes {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* centraliza verticalmente */
+  gap: 8px;
+  height: 100%;
+}
+
+/* Botões de ação */
+.btn-edit,
+.btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  font-size: 1rem;
+  line-height: 0; /* elimina deslocamento por baseline do SVG */
+  display: inline-flex; /* alinha o SVG no centro */
+  align-items: center;
+  justify-content: center;
+}
+
+.acoes svg,
+.acoes i {
+  display: block; /* evita “descer” por baseline */
+}
+
+.btn-edit {
+  color: var(--azul-escuro);
+}
+.btn-delete {
+  color: #e53935;
+}
+
+.btn-edit:hover {
+  background-color: rgba(30, 136, 229, 0.1);
+  transform: scale(1.08);
+}
+.btn-delete:hover {
+  background-color: rgba(229, 57, 53, 0.1);
+  transform: scale(1.08);
+}
+
+/* ----- FILTROS EM CIMA DO HEADER ----- */
+
+.filtros__mudas-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: end;
+  gap: 16px;
+  padding: 10px 24px;
+  background: white;
+}
+
+.filtros__mudas-top .select {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+}
+
+.filtros__mudas-top label {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.filtros__mudas-top select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--cinza-claro);
+}
+
+.btn__limpar-filtros,
+.btn__fechar-filtros {
+  background: var(--azul-claro);
+  color: white;
+  font-weight: 600;
+  padding: 4px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.btn__fechar-filtros {
+  background: white;
+  color: var(--cinza-escuro);
+}
+
+.btn__limpar-filtros:hover {
+  background: var(--azul-medio);
+}
+.btn__fechar-filtros:hover {
+  background: var(--cinza-claro);
+  color: white;
+}

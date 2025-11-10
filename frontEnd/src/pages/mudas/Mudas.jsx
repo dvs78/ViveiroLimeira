@@ -1,25 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "../../components/Header";
 import axios from "axios";
 import ModalMudas from "./ModalMudas";
-import "./mudas.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faPen,
+  faTrash,
+  faFilter,
+} from "@fortawesome/free-solid-svg-icons";
 
-// ...imports iguais
+import {
+  SelectAno,
+  SelectCultivares,
+  SelectSementes,
+  SelectEmbalagens,
+} from "../../components/Select";
+
+const API = "http://localhost:3000/mudas";
+
 const Mudas = () => {
   const [mudas, setMudas] = useState([]);
   const [abrirModal, setAbrirModal] = useState(false);
   const [carregando, setCarregando] = useState(true);
 
-  const [modalMode, setModalMode] = useState("create"); // "create" | "edit"
+  // controle de exibição
+  const [mostrarFiltros, setMostrarFiltros] = useState(false);
+
+  // filtros
+  const [fCultivar, setFCultivar] = useState("");
+  const [fAno, setFAno] = useState("");
+  const [fSemente, setFSemente] = useState("");
+  const [fEmbalagem, setFEmbalagem] = useState("");
+
+  // edição/criação
+  const [modalMode, setModalMode] = useState("create");
   const [selectedMuda, setSelectedMuda] = useState(null);
+
+  // estado para UX do delete
+  const [deletandoId, setDeletandoId] = useState(null);
+
+  const limparFiltros = () => {
+    setFCultivar("");
+    setFAno("");
+    setFSemente("");
+    setFEmbalagem("");
+  };
 
   useEffect(() => {
     const carregar = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/mudas");
+        const { data } = await axios.get(API);
         setMudas(data);
       } finally {
         setCarregando(false);
@@ -28,7 +60,6 @@ const Mudas = () => {
     carregar();
   }, []);
 
-  // trava o scroll de fundo quando o modal está aberto (fica elegante)
   useEffect(() => {
     document.body.style.overflow = abrirModal ? "hidden" : "";
   }, [abrirModal]);
@@ -45,22 +76,166 @@ const Mudas = () => {
     setAbrirModal(true);
   };
 
-  const handleSalvar = async (values) => {
-    // ... POST/PUT como você já fez
+  /**
+   * Recebe do Modal o registro que acabou de ser salvo (POST ou PUT feito no Modal).
+   * Atualiza a lista local de forma otimista.
+   */
+  const handleSalvar = (mudaSalva) => {
+    if (!mudaSalva) return;
+
+    setMudas((prev) => {
+      const existe = prev.some((m) => m.id === mudaSalva.id);
+      return existe
+        ? prev.map((m) => (m.id === mudaSalva.id ? mudaSalva : m)) // PUT
+        : [mudaSalva, ...prev]; // POST (insere no topo; mude se preferir)
+    });
+
     setAbrirModal(false);
     setSelectedMuda(null);
   };
 
+  /**
+   * DELETE /mudas/:id
+   */
   const handleExcluir = async (id) => {
-    // ... sua lógica de DELETE
+    if (!id) return;
+
+    const ok = window.confirm("Tem certeza que deseja excluir este registro?");
+    if (!ok) return;
+
+    try {
+      setDeletandoId(id);
+
+      // opcional: otimismo – remove da UI antes de confirmar no servidor
+      setMudas((prev) => prev.filter((m) => m.id !== id));
+
+      await axios.delete(`${API}/${id}`);
+      // se quiser garantir sincronismo total, você poderia refazer o GET aqui.
+      // mas como já removemos otimisticamente, não é necessário.
+    } catch (err) {
+      console.error("Erro ao excluir:", err);
+      alert("Não foi possível excluir. Tente novamente.");
+      // rollback simples: recarrega a lista (caso tenha dado erro)
+      try {
+        const { data } = await axios.get(API);
+        setMudas(data);
+      } catch {}
+    } finally {
+      setDeletandoId(null);
+    }
   };
+
+  // opções únicas dinamicamente
+  const optCultivares = useMemo(
+    () =>
+      Array.from(new Set((mudas ?? []).map((m) => m.cultivar).filter(Boolean))),
+    [mudas]
+  );
+  const optAnos = useMemo(
+    () =>
+      Array.from(
+        new Set((mudas ?? []).map((m) => String(m.ano ?? "")).filter(Boolean))
+      ).sort(),
+    [mudas]
+  );
+  const optSementes = useMemo(
+    () =>
+      Array.from(new Set((mudas ?? []).map((m) => m.semente).filter(Boolean))),
+    [mudas]
+  );
+  const optEmbalagens = useMemo(
+    () =>
+      Array.from(
+        new Set((mudas ?? []).map((m) => m.embalagem).filter(Boolean))
+      ),
+    [mudas]
+  );
+
+  // filtragem
+  const mudasFiltradas = useMemo(() => {
+    return (mudas ?? []).filter((m) => {
+      const okCultivar = !fCultivar || m.cultivar === fCultivar;
+      const okAno = !fAno || String(m.ano) === String(fAno);
+      const okSemente = !fSemente || m.semente === fSemente;
+      const okEmbalagem = !fEmbalagem || m.embalagem === fEmbalagem;
+      return okCultivar && okAno && okSemente && okEmbalagem;
+    });
+  }, [mudas, fCultivar, fAno, fSemente, fEmbalagem]);
+
+  const manyRows = mudasFiltradas.length > 10;
+
+  // ordenação: ano → cultivar → semente → embalagem
+  const coll = new Intl.Collator("pt-BR", {
+    sensitivity: "base",
+    numeric: true,
+  });
+
+  const mudasOrdenadas = useMemo(() => {
+    const arr = [...mudasFiltradas];
+    arr.sort((a, b) => {
+      // 1️⃣ ordena pelo ano (numérico)
+      const byAno = (a.ano ?? 0) - (b.ano ?? 0);
+      if (byAno !== 0) return byAno;
+
+      // 2️⃣ depois por cultivar (alfabético)
+      const byCultivar = coll.compare(a.cultivar || "", b.cultivar || "");
+      if (byCultivar !== 0) return byCultivar;
+
+      // 3️⃣ depois por semente
+      const bySemente = coll.compare(a.semente || "", b.semente || "");
+      if (bySemente !== 0) return bySemente;
+
+      // 4️⃣ por fim, por embalagem
+      return coll.compare(a.embalagem || "", b.embalagem || "");
+    });
+    return arr;
+  }, [mudasFiltradas]);
 
   return (
     <>
-      <Header titulo="Produção de Mudas" />
+      {/* FILTROS toggle no lugar do header quando abridos */}
+      {mostrarFiltros ? (
+        <section className="filtros__mudas-top">
+          <SelectCultivares
+            options={optCultivares}
+            value={fCultivar}
+            onChange={setFCultivar}
+          />
+          <SelectAno options={optAnos} value={fAno} onChange={setFAno} />
+          <SelectSementes
+            options={optSementes}
+            value={fSemente}
+            onChange={setFSemente}
+          />
+          <SelectEmbalagens
+            options={optEmbalagens}
+            value={fEmbalagem}
+            onChange={setFEmbalagem}
+          />
+          <button
+            type="button"
+            className="btn__limpar-filtros"
+            onClick={limparFiltros}
+          >
+            Limpar
+          </button>
+          <button
+            type="button"
+            className="btn__fechar-filtros"
+            onClick={() => setMostrarFiltros(false)}
+          >
+            Fechar
+          </button>
+        </section>
+      ) : (
+        <Header
+          titulo="Produção de Mudas"
+          faFilter={faFilter}
+          onFilterClick={() => setMostrarFiltros(true)}
+        />
+      )}
 
       <main className="main__mudas">
-        {/* FAB só aparece quando o modal NÃO está aberto */}
         {!abrirModal && (
           <button
             type="button"
@@ -72,12 +247,15 @@ const Mudas = () => {
           </button>
         )}
 
-        {/* TABELA só aparece quando o modal NÃO está aberto */}
         {!abrirModal && (
-          <section className="tabela__mudas">
+          <section
+            className={`tabela__mudas ${
+              manyRows ? "tabela__mudas--scroll" : "tabela__mudas--auto"
+            }`}
+          >
             {carregando ? (
               <p>Carregando dados...</p>
-            ) : mudas.length === 0 ? (
+            ) : mudasFiltradas.length === 0 ? (
               <p>Nenhum registro encontrado.</p>
             ) : (
               <table>
@@ -102,15 +280,8 @@ const Mudas = () => {
                 </thead>
 
                 <tbody>
-                  {mudas.map((m, idx) => (
-                    <tr
-                      key={
-                        m.id ??
-                        `${m.cultivar ?? "sem-cultivar"}-${
-                          m.ano ?? "sem-ano"
-                        }-${idx}`
-                      }
-                    >
+                  {mudasOrdenadas.map((m, idx) => (
+                    <tr key={m.id ?? `${m.cultivar}-${m.ano}-${idx}`}>
                       <td>{m.cultivar ?? "-"}</td>
                       <td>{m.ano ?? "-"}</td>
                       <td>{m.semente ?? "-"}</td>
@@ -125,10 +296,15 @@ const Mudas = () => {
                           >
                             <FontAwesomeIcon icon={faPen} />
                           </button>
+
                           <button
                             className="btn-delete"
                             onClick={() => handleExcluir(m.id)}
-                            title="Excluir"
+                            title={
+                              deletandoId === m.id ? "Excluindo..." : "Excluir"
+                            }
+                            disabled={deletandoId === m.id}
+                            style={{ opacity: deletandoId === m.id ? 0.5 : 1 }}
                           >
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
@@ -142,7 +318,6 @@ const Mudas = () => {
           </section>
         )}
 
-        {/* MODAL centralizado com dados preenchidos */}
         {abrirModal && (
           <ModalMudas
             mode={modalMode}

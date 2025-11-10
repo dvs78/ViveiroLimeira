@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import FecharModal from "../../components/FecharModal";
 import {
   SelectAno,
@@ -19,9 +20,8 @@ const ModalMudas = ({
   const [cultivar, setCultivar] = useState("");
   const [semente, setSemente] = useState("");
   const [embalagem, setEmbalagem] = useState("");
-
-  // guardamos o valor da produção em "string de dígitos" (ex.: "18000")
   const [producao, setProducao] = useState("");
+  const [salvando, setSalvando] = useState(false);
 
   // popula quando abrir em modo edição
   useEffect(() => {
@@ -32,7 +32,7 @@ const ModalMudas = ({
       setEmbalagem(initialData.embalagem ?? "");
       setProducao(
         initialData.producao !== undefined && initialData.producao !== null
-          ? String(initialData.producao) // vira "18000"
+          ? String(initialData.producao)
           : ""
       );
     } else {
@@ -44,25 +44,47 @@ const ModalMudas = ({
     }
   }, [initialData]);
 
-  // formata para exibir no input (ex.: "18.000")
   const producaoFmt = producao ? Number(producao).toLocaleString("pt-BR") : "";
 
-  // onChange simples: só números
   const handleProducaoChange = (e) => {
-    const raw = e.target.value.replace(/\D/g, ""); // mantém apenas dígitos
+    const raw = e.target.value.replace(/\D/g, "");
     setProducao(raw);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave?.({
-      ...(initialData?.id ? { id: initialData.id } : {}),
-      ano,
-      cultivar,
-      semente,
-      embalagem,
-      producao: producao ? Number(producao) : 0, // número limpo
-    });
+    setSalvando(true);
+
+    try {
+      const payload = {
+        ano: ano ? Number(ano) : null,
+        cultivar,
+        semente,
+        embalagem,
+        producao: producao ? Number(producao) : 0,
+      };
+
+      let response;
+      if (mode === "edit" && initialData?.id) {
+        // PUT para atualizar
+        response = await axios.put(
+          `http://localhost:3000/mudas/${initialData.id}`,
+          payload
+        );
+      } else {
+        // POST para criar
+        response = await axios.post("http://localhost:3000/mudas", payload);
+      }
+
+      // sucesso → retorna o registro salvo ao pai (para atualizar tabela)
+      onSave?.(response.data);
+      onClose();
+    } catch (error) {
+      console.error("Erro ao salvar muda:", error);
+      alert("Erro ao salvar. Verifique os dados e tente novamente.");
+    } finally {
+      setSalvando(false);
+    }
   };
 
   return (
@@ -92,7 +114,6 @@ const ModalMudas = ({
               onChange={setEmbalagem}
             />
 
-            {/* PRODUÇÃO com mesmo estilo dos selects */}
             <label className="input__linha-unica">
               <span>Produção</span>
               <input
@@ -105,13 +126,22 @@ const ModalMudas = ({
             </label>
 
             <div className="btns__modal">
-              <button className="btn__salvar-modal" type="submit">
-                {mode === "edit" ? "Salvar alterações" : "Salvar"}
+              <button
+                className="btn__salvar-modal"
+                type="submit"
+                disabled={salvando}
+              >
+                {salvando
+                  ? "Salvando..."
+                  : mode === "edit"
+                  ? "Salvar alterações"
+                  : "Salvar"}
               </button>
               <button
                 className="btn__cancelar-modal"
                 type="button"
                 onClick={onClose}
+                disabled={salvando}
               >
                 Cancelar
               </button>
