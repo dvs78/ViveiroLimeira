@@ -49,7 +49,7 @@ button {
   text-align: center;
   width: 100%;
   height: 30px;
-  background-color: var(--azul-escuro);
+  background-color: var(--azul-claro);
   color: var(--branco);
   border-radius: 4px;
   font-size: 15px;
@@ -59,6 +59,7 @@ button {
     background-color: rgba(39, 52, 105, 0.5);
   }
 }
+
 .btn__cancelar-modal {
   text-align: center;
   width: 100%;
@@ -85,10 +86,10 @@ select {
   flex-direction: column;
   align-items: center;
   outline: none;
-  border-color: var(--azul-claro);
-  box-shadow: rgba(39, 52, 105, 0.7);
-  border-radius: 4px;
-  padding: 5px 8px;
+  /* border-color: var(--azul-claro); */
+  border-radius: 6px;
+  border: 1px solid var(--cinza-claro);
+  padding: 8px 8px;
   font-family: "Montserrat", "Segoe UI";
   font-size: 14px;
   gap: 30px;
@@ -120,9 +121,9 @@ select {
 .input__linha-unica input[type="tel"],
 .input__linha-unica input[type="search"] {
   width: 100%;
-  border: 1px solid rgba(76, 99, 189, 0.6); /* tom igual ao select */
-  border-radius: 4px;
-  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--cinza-claro);
+  padding: 8px 8px;
   font-family: "Montserrat", "Segoe UI";
   font-size: 14px;
   /* color: var(--cinza-escuro); */
@@ -571,7 +572,10 @@ h2 {
   align-items: end;
   gap: 16px;
   padding: 10px 24px;
-  background: white;
+  background: var(--azul-escuro);
+  & label {
+    color: white;
+  }
 }
 
 .filtros__mudas-top .select {
@@ -591,27 +595,60 @@ h2 {
   border: 1px solid var(--cinza-claro);
 }
 
-.btn__limpar-filtros,
-.btn__fechar-filtros {
-  background: var(--azul-claro);
-  color: white;
-  font-weight: 600;
+.btn__limpar-filtros {
+  background-color: var(--azul-claro);
+  color: var(--branco);
+  font-weight: 500;
   padding: 4px 18px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   height: 40px;
+  &:hover {
+    color: black;
+    background-color: white;
+  }
+}
+
+.btn__salvar-modal {
+  text-align: center;
+  width: 100%;
+  height: 30px;
+  background-color: var(--azul-claro);
+  color: var(--branco);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 5px;
+  &:hover {
+    background-color: rgba(39, 52, 105, 0.5);
+  }
 }
 
 .btn__fechar-filtros {
-  background: white;
-  color: var(--cinza-escuro);
+  background-color: transparent;
+  color: white;
+  font-weight: 500;
+  padding: 4px 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 40px;
+  &:hover {
+    background-color: rgba(170, 170, 170, 0.5);
+  }
 }
 
-.btn__limpar-filtros:hover {
-  background: var(--azul-medio);
-}
-.btn__fechar-filtros:hover {
-  background: var(--cinza-claro);
-  color: white;
+.btn__cancelar-modal {
+  text-align: center;
+  width: 100%;
+  background-color: transparent;
+  color: black;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 5px;
+  &:hover {
+    background-color: rgba(170, 170, 170, 0.5);
+  }
 }
