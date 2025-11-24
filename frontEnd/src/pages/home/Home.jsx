@@ -1,7 +1,11 @@
+import { notificar } from "../../components/Toast";
+import ConfirmDialog from "../../components/ConfirmDialog";
 import { useState, useEffect, useMemo } from "react";
 import CardMuda from "../../components/CardMuda";
 import Header from "../../components/Header";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import {
   faTruck,
@@ -11,6 +15,7 @@ import {
   faCartShopping,
   faFilter,
   faTrash,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -41,6 +46,14 @@ const Home = () => {
 
   // lista de itens já adicionados
   const [itensCarrinho, setItensCarrinho] = useState([]);
+
+  // confirmação de ações perigosas (remover item / limpar carrinho)
+  const [confirmConfig, setConfirmConfig] = useState({
+    open: false,
+    tipo: null,
+    index: null,
+    item: null,
+  });
 
   const limparFiltros = () => {
     setFCultivar("");
@@ -126,6 +139,25 @@ const Home = () => {
     return arr;
   }, [mudasFiltradas]);
 
+  // totais gerais (usando as mudas filtradas)
+  const totaisMudas = useMemo(() => {
+    return (mudasFiltradas ?? []).reduce(
+      (acc, m) => {
+        const prod = Number(m.producao) || 0;
+        const ped = Number(m.pedido) || 0;
+
+        // mesmo critério do CardMuda: estoque = produção - pedido
+        const est = prod - ped;
+
+        acc.producao += prod;
+        acc.pedido += ped;
+        acc.estoque += est;
+        return acc;
+      },
+      { producao: 0, pedido: 0, estoque: 0 }
+    );
+  }, [mudasFiltradas]);
+
   // total calculado do item atual
   const total = useMemo(() => {
     const q = qtdeRaw ? Number(qtdeRaw) : 0;
@@ -153,6 +185,14 @@ const Home = () => {
     setCarrinhoAberto(true);
   };
 
+  // Abrir carrinho pelo ícone do header
+  const abrirCarrinhoPeloHeader = () => {
+    setCarrinhoAberto(true);
+    setMudaSelecionada(null); // não mostra formulário, só itens/resumo
+    setQtdeRaw("");
+    setValorUnit("");
+  };
+
   const fecharCarrinho = () => {
     setCarrinhoAberto(false);
     setMudaSelecionada(null);
@@ -161,8 +201,64 @@ const Home = () => {
   };
 
   // remover item do carrinho pelo índice
-  const removerItemCarrinho = (index) => {
-    setItensCarrinho((prev) => prev.filter((_, i) => i !== index));
+  // remover item do carrinho pelo índice
+  // const removerItemCarrinho = (index) => {
+  //   setItensCarrinho((prev) => prev.filter((_, i) => i !== index));
+  //   notificar("erro", "Item removido do carrinho.");
+  // };
+  const pedirConfirmacaoRemoverItem = (index) => {
+    setConfirmConfig({
+      open: true,
+      tipo: "remover-item",
+      index,
+      item: itensCarrinho[index], // <<-- aqui está a mágica
+    });
+  };
+
+  // limpar carrinho inteiro
+  // const limparCarrinho = () => {
+  //   if (itensCarrinho.length === 0) {
+  //     notificar("info", "O carrinho já está vazio.");
+  //     return;
+  //   }
+
+  //   const ok = window.confirm("Deseja remover todos os itens do carrinho?");
+  //   if (!ok) return;
+
+  //   setItensCarrinho([]);
+  //   notificar("sucesso", "Carrinho limpo com sucesso.");
+  // };
+  const limparCarrinho = () => {
+    if (itensCarrinho.length === 0) {
+      notificar("info", "O carrinho já está vazio.");
+      return;
+    }
+
+    setConfirmConfig({
+      open: true,
+      tipo: "limpar-carrinho",
+      index: null,
+    });
+  };
+
+  const fecharDialogoConfirmacao = () => {
+    setConfirmConfig((prev) => ({ ...prev, open: false }));
+  };
+
+  const confirmarAcaoPerigosa = () => {
+    if (confirmConfig.tipo === "remover-item" && confirmConfig.index !== null) {
+      setItensCarrinho((prev) =>
+        prev.filter((_, i) => i !== confirmConfig.index)
+      );
+      notificar("erro", "Item removido do carrinho.");
+    }
+
+    if (confirmConfig.tipo === "limpar-carrinho") {
+      setItensCarrinho([]);
+      notificar("sucesso", "Carrinho limpo com sucesso.");
+    }
+
+    setConfirmConfig({ open: false, tipo: null, index: null });
   };
 
   // confirmar item atual
@@ -171,7 +267,7 @@ const Home = () => {
     const valor = parseFloat(String(valorUnit).replace(",", "."));
 
     if (!mudaSelecionada || !quantidade || !Number.isFinite(valor)) {
-      alert("Preencha quantidade e valor unitário corretamente.");
+      notificar("erro", "Preencha quantidade e valor unitário corretamente.");
       return;
     }
 
@@ -186,6 +282,7 @@ const Home = () => {
     };
 
     setItensCarrinho((prev) => [...prev, novoItem]);
+    notificar("sucesso", "Item adicionado ao carrinho.");
 
     // limpa campos mas mantém o carrinho aberto
     setQtdeRaw("");
@@ -197,12 +294,13 @@ const Home = () => {
     <>
       {mostrarFiltros ? (
         <section className="filtros__mudas-top">
+          <SelectAno options={optAnos} value={fAno} onChange={setFAno} />
           <SelectCultivares
             options={optCultivares}
             value={fCultivar}
             onChange={setFCultivar}
           />
-          <SelectAno options={optAnos} value={fAno} onChange={setFAno} />
+
           <SelectSementes
             options={optSementes}
             value={fSemente}
@@ -230,7 +328,7 @@ const Home = () => {
         </section>
       ) : (
         <Header
-          titulo="Viveiro de Mudas de Café"
+          titulo="Viveiro de Café"
           truck={faTruck}
           book={faBook}
           seedling={faSeedling}
@@ -238,8 +336,33 @@ const Home = () => {
           iconCart={faCartShopping}
           faFilter={faFilter}
           onFilterClick={() => setMostrarFiltros(true)}
+          onCartClick={abrirCarrinhoPeloHeader}
         />
       )}
+
+      {/* ===== Resumo geral de produção/pedido/estoque ===== */}
+      <section className="resumo__mudas">
+        <div className="resumo__mudas-card resumo__mudas-card--producao">
+          <span className="resumo__mudas-label">Produção total</span>
+          <strong className="resumo__mudas-value">
+            {totaisMudas.producao.toLocaleString("pt-BR")}
+          </strong>
+        </div>
+
+        <div className="resumo__mudas-card resumo__mudas-card--pedido">
+          <span className="resumo__mudas-label">Pedido total</span>
+          <strong className="resumo__mudas-value">
+            {totaisMudas.pedido.toLocaleString("pt-BR")}
+          </strong>
+        </div>
+
+        <div className="resumo__mudas-card resumo__mudas-card--estoque">
+          <span className="resumo__mudas-label">Estoque total</span>
+          <strong className="resumo__mudas-value">
+            {totaisMudas.estoque.toLocaleString("pt-BR")}
+          </strong>
+        </div>
+      </section>
 
       <div className="home__container-card">
         {carregando ? (
@@ -270,13 +393,24 @@ const Home = () => {
 
           <aside className="cart-sidebar">
             <header className="cart-sidebar__header">
-              <h2>Adicionar ao carrinho</h2>
+              <h2>Carrinho</h2>
+
+              {itensCarrinho.length > 0 && (
+                <button
+                  type="button"
+                  className="cart-sidebar__clear"
+                  onClick={limparCarrinho}
+                >
+                  <span>Limpar carrinho</span>
+                </button>
+              )}
+
               <button
                 type="button"
                 className="cart-sidebar__close"
                 onClick={fecharCarrinho}
               >
-                ✕
+                <FontAwesomeIcon icon={faXmark} />
               </button>
             </header>
 
@@ -333,7 +467,6 @@ const Home = () => {
                   {/* total + botão lado a lado */}
                   <div className="cart-panel__actions">
                     <div className="cart-panel__total-row">
-                      <span>Valor total:</span>
                       <strong>
                         R${" "}
                         {total.toLocaleString("pt-BR", {
@@ -374,22 +507,25 @@ const Home = () => {
                           <button
                             type="button"
                             className="cart-items__remove"
-                            onClick={() => removerItemCarrinho(index)}
+                            onClick={() => pedirConfirmacaoRemoverItem(index)}
                           >
-                            Remover
+                            <FontAwesomeIcon icon={faTrash} />
                           </button>
                         </div>
 
                         <div className="cart-items__bottom">
                           <span>
-                            Qtde: {item.quantidade.toLocaleString("pt-BR")}
+                            Qtde:{" "}
+                            <strong>
+                              {item.quantidade.toLocaleString("pt-BR")}
+                            </strong>
                           </span>
                           <span>
                             Total:{" "}
                             <strong>
-                              R{" "}
+                              R${" "}
                               {item.total.toLocaleString("pt-BR", {
-                                minimumFractionDigits: 2,
+                                minimumFractionDigits: 0,
                               })}
                             </strong>
                           </span>
@@ -420,6 +556,52 @@ const Home = () => {
           </aside>
         </>
       )}
+      {/* Modal de confirmação reutilizável */}
+      <ConfirmDialog
+        open={confirmConfig.open}
+        title={
+          confirmConfig.tipo === "limpar-carrinho"
+            ? "Limpar carrinho?"
+            : "Remover item do carrinho?"
+        }
+        description={
+          confirmConfig.tipo === "limpar-carrinho" ? (
+            "Essa ação vai remover todos os itens adicionados. Deseja continuar?"
+          ) : (
+            <div className="confirm-modal__item-info">
+              <div className="confirm-modal__item-cultivar">
+                {confirmConfig.item?.cultivar}
+              </div>
+
+              <div className="confirm-modal__item-line">
+                {confirmConfig.item?.semente} • {confirmConfig.item?.embalagem}
+              </div>
+
+              <div className="confirm-modal__item-line">
+                Qtde:{" "}
+                <strong>
+                  {confirmConfig.item?.quantidade.toLocaleString("pt-BR")}
+                </strong>
+              </div>
+
+              <div className="confirm-modal__item-line">
+                Total:{" "}
+                <strong>
+                  R$ {confirmConfig.item?.total.toLocaleString("pt-BR")}
+                </strong>
+              </div>
+            </div>
+          )
+        }
+        confirmLabel={
+          confirmConfig.tipo === "limpar-carrinho"
+            ? "Sim, limpar tudo"
+            : "Sim, remover"
+        }
+        cancelLabel="Cancelar"
+        onConfirm={confirmarAcaoPerigosa}
+        onCancel={fecharDialogoConfirmacao}
+      />
     </>
   );
 };

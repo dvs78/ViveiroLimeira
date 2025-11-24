@@ -81,8 +81,8 @@ const CardMuda = ({
 
   const prodNum = toNumber(producao);
   const pedidoNum = toNumber(pedido);
-  const estoqueNum = toNumber(estoque);
-
+  // const estoqueNum = toNumber(estoque);
+  const estoqueNum = prodNum - pedidoNum;
   const percEstoque =
     prodNum > 0
       ? Math.max(0, Math.min(100, Math.round((estoqueNum / prodNum) * 100)))
