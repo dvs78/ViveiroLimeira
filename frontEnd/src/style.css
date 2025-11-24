@@ -535,7 +535,7 @@ h2 {
   padding: 6px 8px;
   border-radius: 6px;
   transition: background-color 0.15s ease, transform 0.1s ease;
-  font-size: 1rem;
+  font-size: 15px;
   line-height: 0; /* elimina deslocamento por baseline do SVG */
   display: inline-flex; /* alinha o SVG no centro */
   align-items: center;
@@ -651,4 +651,218 @@ h2 {
   &:hover {
     background-color: rgba(170, 170, 170, 0.5);
   }
+}
+
+/* ===== CARRINHO LATERAL ===== */
+.cart-sidebar__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 90;
+}
+
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  font-family: "Montserrat", system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+.cart-sidebar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cart-sidebar__close {
+  border: none;
+  background: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Área rolável */
+.cart-sidebar__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------- FORMULÁRIO ---------- */
+
+.cart-panel {
+  border-radius: 12px;
+  background: #fdfdff;
+  box-shadow: 0 4px 10px rgba(7, 16, 64, 0.04);
+  padding: 12px 14px 14px;
+  border: 1px solid #e1e4f0;
+  box-sizing: border-box;
+}
+
+.cart-panel__info {
+  margin-bottom: 6px;
+}
+
+.cart-panel__cultivar {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.cart-panel__meta {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: #555;
+  display: flex;
+  gap: 6px;
+}
+
+/* título */
+.cart-panel__title {
+  margin: 8px 0 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* linha com inputs lado a lado */
+.cart-panel__row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cart-field {
+  flex: 1;
+  min-width: 0; /* permite encolher sem estourar */
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cart-field__label {
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.cart-field__input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d0d4e4;
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.82rem;
+}
+
+/* linha do total do item atual */
+.cart-panel__total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+/* botão confirmar */
+.cart-panel__confirm {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background: var(--azul-escuro, #1f3c88);
+  color: #ffffff;
+  margin-top: 10px;
+}
+
+/* ---------- ITENS ADICIONADOS ---------- */
+
+.cart-items {
+  border-radius: 12px;
+  background: #f8f9ff;
+  border: 1px solid #e1e4f0;
+  padding: 10px 12px;
+  max-height: 210px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.cart-items__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.cart-items__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cart-items__item {
+  padding: 6px 0;
+  border-bottom: 1px solid #e1e4f0;
+  font-size: 0.8rem;
+}
+
+.cart-items__item:last-child {
+  border-bottom: none;
+}
+
+.cart-items__top {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cart-items__cultivar {
+  font-weight: 600;
+}
+
+.cart-items__meta {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.cart-items__bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3px;
+}
+
+/* ---------- RESUMO DO CARRINHO ---------- */
+
+.cart-summary {
+  margin-top: 4px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #f5f7ff;
+  border: 1px dashed #c5cbe9;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+}
+
+.cart-summary__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.cart-summary__row--total {
+  font-weight: 600;
 }
