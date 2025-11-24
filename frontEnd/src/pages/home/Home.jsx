@@ -10,6 +10,7 @@ import {
   faUser,
   faCartShopping,
   faFilter,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -159,7 +160,12 @@ const Home = () => {
     setValorUnit("");
   };
 
-  // ✅ Função para confirmar o item e jogar na lista do carrinho
+  // remover item do carrinho pelo índice
+  const removerItemCarrinho = (index) => {
+    setItensCarrinho((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // confirmar item atual
   const confirmarItem = () => {
     const quantidade = qtdeRaw ? Number(qtdeRaw) : 0;
     const valor = parseFloat(String(valorUnit).replace(",", "."));
@@ -176,12 +182,12 @@ const Home = () => {
       embalagem: mudaSelecionada.embalagem,
       quantidade,
       valorUnit: valor,
-      total, // usa o useMemo já calculado
+      total,
     };
 
     setItensCarrinho((prev) => [...prev, novoItem]);
 
-    // limpa campos, mas mantém o carrinho aberto e mostra lista/summary
+    // limpa campos mas mantém o carrinho aberto
     setQtdeRaw("");
     setValorUnit("");
     setMudaSelecionada(null);
@@ -275,7 +281,7 @@ const Home = () => {
             </header>
 
             <div className="cart-sidebar__body">
-              {/* 1) FORMULÁRIO (sempre primeiro) */}
+              {/* 1) FORMULÁRIO */}
               {mudaSelecionada && (
                 <section className="cart-panel">
                   <div className="cart-panel__info">
@@ -284,11 +290,9 @@ const Home = () => {
                     </p>
                     <p className="cart-panel__meta">
                       <span>{mudaSelecionada.semente}</span>
-                      <span>• {mudaSelecionada.embalagem}</span>
+                      <span> • {mudaSelecionada.embalagem}</span>
                     </p>
                   </div>
-
-                  <h3 className="cart-panel__title">Adicionar item</h3>
 
                   <div className="cart-panel__row">
                     <label className="cart-field">
@@ -326,24 +330,27 @@ const Home = () => {
                     </label>
                   </div>
 
-                  <div className="cart-panel__total-row">
-                    <span>Valor total:</span>
-                    <strong>
-                      R{" "}
-                      {total.toLocaleString("pt-BR", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </strong>
-                  </div>
+                  {/* total + botão lado a lado */}
+                  <div className="cart-panel__actions">
+                    <div className="cart-panel__total-row">
+                      <span>Valor total:</span>
+                      <strong>
+                        R${" "}
+                        {total.toLocaleString("pt-BR", {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })}
+                      </strong>
+                    </div>
 
-                  <button
-                    type="button"
-                    className="cart-panel__confirm"
-                    onClick={confirmarItem}
-                  >
-                    Confirmar
-                  </button>
+                    <button
+                      type="button"
+                      className="cart-panel__confirm"
+                      onClick={confirmarItem}
+                    >
+                      Confirmar
+                    </button>
+                  </div>
                 </section>
               )}
 
@@ -355,13 +362,24 @@ const Home = () => {
                     {itensCarrinho.map((item, index) => (
                       <li key={index} className="cart-items__item">
                         <div className="cart-items__top">
-                          <span className="cart-items__cultivar">
-                            {item.cultivar}
-                          </span>
-                          <span className="cart-items__meta">
-                            {item.semente} • {item.embalagem}
-                          </span>
+                          <div>
+                            <span className="cart-items__cultivar">
+                              {item.cultivar}
+                            </span>
+                            <span className="cart-items__meta">
+                              {item.semente} • {item.embalagem}
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            className="cart-items__remove"
+                            onClick={() => removerItemCarrinho(index)}
+                          >
+                            Remover
+                          </button>
                         </div>
+
                         <div className="cart-items__bottom">
                           <span>
                             Qtde: {item.quantidade.toLocaleString("pt-BR")}
@@ -391,9 +409,9 @@ const Home = () => {
                 <div className="cart-summary__row cart-summary__row--total">
                   <span>Total do carrinho</span>
                   <strong>
-                    R{" "}
+                    R${" "}
                     {totalValorCarrinho.toLocaleString("pt-BR", {
-                      minimumFractionDigits: 2,
+                      minimumFractionDigits: 0,
                     })}
                   </strong>
                 </div>
